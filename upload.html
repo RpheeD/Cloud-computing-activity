@@ -7,7 +7,7 @@
 
 body{
 font-family: Arial, Helvetica, sans-serif;
-background:#f2f4f8;
+background:#d9fdd3; /* Light green background */
 display:flex;
 justify-content:center;
 align-items:center;
@@ -89,6 +89,7 @@ reader.onload = async function(e){
 
 const content = e.target.result.split(',')[1];
 
+// Your GitHub details
 const username = "RpheeD";
 const repo = "Cloud-computing-activity";
 const token = "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";
@@ -96,13 +97,13 @@ const token = "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";
 const api = `https://api.github.com/repos/${username}/${repo}/contents/${file.name}`;
 
 const data = {
-message:"upload file",
+message:"Uploading file via Cloud Computing activity",
 content:content
 };
 
 try{
 
-await fetch(api,{
+const response = await fetch(api,{
 method:"PUT",
 headers:{
 "Authorization":`token ${token}`,
@@ -111,11 +112,20 @@ headers:{
 body:JSON.stringify(data)
 });
 
+const result = await response.json();
+
+if(response.ok){
 document.getElementById("status").innerHTML="✅ File uploaded successfully!";
+console.log(result);
+}else{
+document.getElementById("status").innerHTML="❌ Upload failed: " + result.message;
+console.log(result);
+}
 
 }catch(err){
 
 document.getElementById("status").innerHTML="❌ Upload failed.";
+console.error(err);
 
 }
 
