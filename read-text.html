@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Read Text File</h2>
+
+<button onclick="readFile()">Fetch File</button>
+
+<pre id="content"></pre>
+
+<script>
+
+async function readFile(){
+
+const owner = "RpheeD";
+const repo = "Cloud-computing-activity";
+const file = "sample.txt";
+
+const url = `https://api.github.com/repos/${owner}/${repo}/contents/${file}`;
+
+const response = await fetch(url);
+
+const data = await response.json();
+
+const text = atob(data.content);
+
+document.getElementById("content").textContent = text;
+
+}
+
+</script>
+
+</body>
+</html>
