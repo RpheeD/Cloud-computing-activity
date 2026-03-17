@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Upload File to GitHub</title>
+</head>
+
+<body>
+
+<h2>Upload File</h2>
+
+<input type="file" id="fileInput">
+<button onclick="uploadFile()">Upload</button>
+
+<script>
+
+async function uploadFile(){
+
+const file = document.getElementById("fileInput").files[0];
+
+const reader = new FileReader();
+
+reader.onload = async function(e){
+
+const content = e.target.result.split(',')[1];
+
+const username = "RpheeD";
+const repo = "Cloud-computing-activity";
+const token = "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";
+
+const api = `https://api.github.com/repos/${username}/${repo}/contents/${file.name}`;
+
+const data = {
+message: "upload file",
+content: content
+};
+
+await fetch(api,{
+method:"PUT",
+headers:{
+"Authorization":`token ${token}`,
+"Content-Type":"application/json"
+},
+body:JSON.stringify(data)
+});
+
+alert("File uploaded!");
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+</script>
+
+</body>
+</html>
